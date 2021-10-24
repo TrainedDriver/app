@@ -43,7 +43,9 @@ export default class HorizontalLayoutWithIFrame extends React.Component {
           </h1>
           <h2>
             <b style={{ color: "white" }}>Status: </b>
-            <b style={{ color: "green" }}>SAFE</b>
+            <b id="status" style={{ color: "green" }}>
+              SAFE
+            </b>
             {/* <b style={{ color: "red" }}>WARNING</b> */}
           </h2>
           <h2>
@@ -66,14 +68,42 @@ export default class HorizontalLayoutWithIFrame extends React.Component {
         <div className="my-iframe">{this.renderDetailLinks()}</div>
 
         <div className="my-pane">
+          {/* <iframe
+            width="100%"
+            // height="100%"
+            src="//www.youtube.com/embed/IXxcKuenuiI?modestbranding=1&autohide=1&showinfo=0&controls=0"
+            frameborder="0"
+            allowfullscreen
+          ></iframe> */}
+
           <ReactPlayer
-            url="videos/demo_video.mp4"
-            // controls={true}
+            url="https://github.com/TrainedDriver/app/blob/main/public/videos/drone.mp4?raw=true"
+            config={{
+              youtube: {
+                playerVars: {
+                  showinfo: 1,
+                  modestbranding: 1
+                }
+              }
+            }}
+            controls={false}
             width="100%"
             height="100%"
             muted={true}
             loop={true}
             playing={true}
+            onStart={() => {
+              setTimeout(function () {
+                var e = document.getElementById("status");
+                e.innerText = "DANGER";
+                e.style.color = "red";
+              }, 36540);
+              setTimeout(function () {
+                var e = document.getElementById("status");
+                e.innerText = "SAFE";
+                e.style.color = "green";
+              }, 52500);
+            }}
           />
         </div>
       </SplitterLayout>
